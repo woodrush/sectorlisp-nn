@@ -16,4 +16,6 @@ def model_predict(x, plot=True):
         plt.show()
     x = x.reshape((-1,5,3))
     predictions = model(x)
-    print(np.argmax(predictions), predictions.numpy())
+    pred = np.argmax(predictions)
+    print(pred, predictions.numpy())
+    return pred
