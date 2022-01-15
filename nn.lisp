@@ -1,12 +1,49 @@
-((LAMBDA (u0 umax fracbitsize
+((LAMBDA (u0 umax fracbitsize 1 2 3
           _ addhalf _ addfull _ uaddnofc _ uaddnof _ umultnof
           _ take _ drop _ ufixmult _ negate _ + _ - _ * _ 0>fix _ < _ > _ <<
-          _ vdot)
+          _ vdot _ vecmatmulVAT _ matmulABT)
    ((LAMBDA () ())
-    (mandelplot)))
- (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0  0 0 0 0    0 0 0 0))
- (QUOTE (1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1    1 1 1 1))
- (QUOTE (1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1))
+    (PRINT (* 1 1))(PRINT)
+    (PRINT (+ 1 1))(PRINT)
+    (PRINT (vdot (CONS 1 (CONS 2 (CONS 3 NIL))) (CONS 1 (CONS 3 (CONS 2 NIL)))))(PRINT)
+    (PRINT (vecmatmulVAT
+      (CONS 1 NIL)
+      (CONS (CONS 1 NIL) NIL)
+      ))(PRINT)
+    (PRINT (vecmatmulVAT
+      (CONS 1 (CONS 2 (CONS 3 NIL)))
+      (CONS (CONS 1  (CONS u0 (CONS u0 NIL)))
+      (CONS (CONS u0 (CONS 1  (CONS u0 NIL)))
+      (CONS (CONS u0 (CONS u0 (CONS 1  NIL)))
+            NIL)))
+      ))(PRINT)
+    (PRINT (matmulABT
+      (CONS (CONS 1 (CONS 2 (CONS 3 NIL)))
+      (CONS (CONS 2 (CONS 3 (CONS 1 NIL)))
+      (CONS (CONS 3 (CONS 1 (CONS 2 NIL)))
+            NIL)))
+      (CONS (CONS 1  (CONS u0 (CONS u0 NIL)))
+      (CONS (CONS u0 (CONS 1  (CONS u0 NIL)))
+      (CONS (CONS u0 (CONS u0 (CONS 1  NIL)))
+            NIL)))
+    ))(PRINT)
+    (PRINT (matmulABT
+      (CONS (CONS 1 (CONS 2 (CONS 3 NIL)))
+      (CONS (CONS 2 (CONS 3 (CONS 1 NIL)))
+      (CONS (CONS 3 (CONS 1 (CONS 2 NIL)))
+            NIL)))
+      (CONS (CONS 3 (CONS 1 (CONS 3 NIL)))
+      (CONS (CONS 2 (CONS 2 (CONS 3 NIL)))
+      (CONS (CONS 1 (CONS 2 (CONS 2 NIL)))
+            NIL)))
+    ))(PRINT)
+    ))
+ (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    0 0 0 0  0 0 0 0))
+ (QUOTE (1 1 1 1  1 1 1 1  1 1 1 1    1 1 1 1  1 1 1 1))
+ (QUOTE (1 1 1 1  1 1 1 1  1 1 1 1))
+ (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    1 0 0 0  0 0 0 0))
+ (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    0 1 0 0  0 0 0 0))
+ (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    1 1 0 0  0 0 0 0))
  (QUOTE
    ;; addhalf : Half adder
    ;;           Output binary is in reverse order (the msb is at the end)
@@ -135,10 +172,28 @@
    ;; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
    ;; vdot : Vector dot product
  )
- (QUOTE (LAMBDA (X Y))
-    (COND
-      ((EQ NIL X) u0)
-      ((QUOTE T)
-       (+ (* (CAR X) (CAR Y)) (vdot (CDR X) (CDR Y))))))
- 
+ (QUOTE (LAMBDA (X Y)
+   (COND
+     (X (+ (* (CAR X) (CAR Y)) (vdot (CDR X) (CDR Y))))
+     ((QUOTE T) u0))))
+ (QUOTE
+   ;; vecmatmulVAT : vec, mat -> vec : Vector V times transposed matrix A
+ )
+ (QUOTE (LAMBDA (V AT)
+   ((LAMBDA (vecmatmulVAThelper)
+      (vecmatmulVAThelper AT))
+    (QUOTE (LAMBDA (AT)
+      (COND
+        (AT (CONS (vdot V (CAR AT)) (vecmatmulVAThelper (CDR AT))))
+        ((QUOTE T) NIL)))))))
+ (QUOTE
+   ;; matmulABT : mat, mat -> mat : Matrix A times transposed matrix B
+ )
+ (QUOTE (LAMBDA (A BT)
+   ((LAMBDA (matmulABThelper)
+      (matmulABThelper A))
+    (QUOTE (LAMBDA (A)
+      (COND
+        (A (CONS (vecmatmulVAT (CAR A) BT) (matmulABThelper (CDR A))))
+        ((QUOTE T) NIL)))))))
  )
