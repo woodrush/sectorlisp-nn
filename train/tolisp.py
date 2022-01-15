@@ -24,6 +24,7 @@ def tofixedfloat(x):
     if sign == "1":
         ret = "".join([("1" if c == "0" else "0") for c in ret])
         negativeret = int(ret, base=2) + 1
+        ret = f"{negativeret:b}"
         ret = ret[-N_total_bits:]
     return ret
 
