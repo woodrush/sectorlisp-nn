@@ -1,42 +1,52 @@
-((LAMBDA (u0 umax fracbitsize 1 2 3
+((LAMBDA (u0 umax fracbitsize 1 2 3 -1
           _ addhalf _ addfull _ uaddnofc _ uaddnof _ umultnof
           _ take _ drop _ ufixmult _ negate _ + _ - _ * _ 0>fix _ < _ > _ <<
-          _ vdot _ vecmatmulVAT _ matmulABT)
+          _ vdot _ vecmatmulVAT _ matmulABT _ leakyReLUscal _ leakyReLUvec _ leakyReLUmat)
    ((LAMBDA () ())
-    (PRINT (* 1 1))(PRINT)
-    (PRINT (+ 1 1))(PRINT)
-    (PRINT (vdot (CONS 1 (CONS 2 (CONS 3 NIL))) (CONS 1 (CONS 3 (CONS 2 NIL)))))(PRINT)
-    (PRINT (vecmatmulVAT
-      (CONS 1 NIL)
-      (CONS (CONS 1 NIL) NIL)
+    (QUOTE
+      (PRINT (* 1 1))(PRINT)
+      (PRINT (+ 1 1))(PRINT)
+      (PRINT (vdot (CONS 1 (CONS 2 (CONS 3 NIL))) (CONS 1 (CONS 3 (CONS 2 NIL)))))(PRINT)
+      (PRINT (vecmatmulVAT
+        (CONS 1 NIL)
+        (CONS (CONS 1 NIL) NIL)
+        ))(PRINT)
+      (PRINT (vecmatmulVAT
+        (CONS 1 (CONS 2 (CONS 3 NIL)))
+        (CONS (CONS 1  (CONS u0 (CONS u0 NIL)))
+        (CONS (CONS u0 (CONS 1  (CONS u0 NIL)))
+        (CONS (CONS u0 (CONS u0 (CONS 1  NIL)))
+              NIL)))
+        ))(PRINT)
+      (PRINT (matmulABT
+        (CONS (CONS 1 (CONS 2 (CONS 3 NIL)))
+        (CONS (CONS 2 (CONS 3 (CONS 1 NIL)))
+        (CONS (CONS 3 (CONS 1 (CONS 2 NIL)))
+              NIL)))
+        (CONS (CONS 1  (CONS u0 (CONS u0 NIL)))
+        (CONS (CONS u0 (CONS 1  (CONS u0 NIL)))
+        (CONS (CONS u0 (CONS u0 (CONS 1  NIL)))
+              NIL)))
       ))(PRINT)
-    (PRINT (vecmatmulVAT
-      (CONS 1 (CONS 2 (CONS 3 NIL)))
-      (CONS (CONS 1  (CONS u0 (CONS u0 NIL)))
-      (CONS (CONS u0 (CONS 1  (CONS u0 NIL)))
-      (CONS (CONS u0 (CONS u0 (CONS 1  NIL)))
-            NIL)))
+      (PRINT (matmulABT
+        (CONS (CONS 1 (CONS 2 (CONS 3 NIL)))
+        (CONS (CONS 2 (CONS 3 (CONS 1 NIL)))
+        (CONS (CONS 3 (CONS 1 (CONS 2 NIL)))
+              NIL)))
+        (CONS (CONS 3 (CONS 1 (CONS 3 NIL)))
+        (CONS (CONS 2 (CONS 2 (CONS 3 NIL)))
+        (CONS (CONS 1 (CONS 2 (CONS 2 NIL)))
+              NIL)))
       ))(PRINT)
-    (PRINT (matmulABT
-      (CONS (CONS 1 (CONS 2 (CONS 3 NIL)))
-      (CONS (CONS 2 (CONS 3 (CONS 1 NIL)))
-      (CONS (CONS 3 (CONS 1 (CONS 2 NIL)))
+    )
+    (PRINT (negate -1))(PRINT)
+    (PRINT (leakyReLUscal -1))(PRINT)
+    (PRINT (leakyReLUmat
+      (CONS (CONS 3    (CONS 1 (CONS 3    NIL)))
+      (CONS (CONS -1   (CONS 2 (CONS 3    NIL)))
+      (CONS (CONS 1    (CONS 2 (CONS -1   NIL)))
             NIL)))
-      (CONS (CONS 1  (CONS u0 (CONS u0 NIL)))
-      (CONS (CONS u0 (CONS 1  (CONS u0 NIL)))
-      (CONS (CONS u0 (CONS u0 (CONS 1  NIL)))
-            NIL)))
-    ))(PRINT)
-    (PRINT (matmulABT
-      (CONS (CONS 1 (CONS 2 (CONS 3 NIL)))
-      (CONS (CONS 2 (CONS 3 (CONS 1 NIL)))
-      (CONS (CONS 3 (CONS 1 (CONS 2 NIL)))
-            NIL)))
-      (CONS (CONS 3 (CONS 1 (CONS 3 NIL)))
-      (CONS (CONS 2 (CONS 2 (CONS 3 NIL)))
-      (CONS (CONS 1 (CONS 2 (CONS 2 NIL)))
-            NIL)))
-    ))(PRINT)
+    ))
     ))
  (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    0 0 0 0  0 0 0 0))
  (QUOTE (1 1 1 1  1 1 1 1  1 1 1 1    1 1 1 1  1 1 1 1))
@@ -44,6 +54,7 @@
  (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    1 0 0 0  0 0 0 0))
  (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    0 1 0 0  0 0 0 0))
  (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    1 1 0 0  0 0 0 0))
+ (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    1 1 1 1  1 1 1 1))
  (QUOTE
    ;; addhalf : Half adder
    ;;           Output binary is in reverse order (the msb is at the end)
@@ -196,4 +207,25 @@
       (COND
         (A (CONS (vecmatmulVAT (CAR A) BT) (matmulABThelper (CDR A))))
         ((QUOTE T) NIL)))))))
+ (QUOTE
+   ;; leakyReLUscal
+ )
+ (QUOTE (LAMBDA (X)
+   (COND
+     ((0>fix X) (negate (<< (negate X) (QUOTE (* * * * * *)))))
+     ((QUOTE T) X))))
+ (QUOTE
+   ;; leakyReLUvec
+ )
+ (QUOTE (LAMBDA (V)
+   (COND
+     (V (CONS (leakyReLUscal (CAR V)) (leakyReLUvec (CDR V))))
+     ((QUOTE T) NIL))))
+ (QUOTE
+   ;; leakyReLUmat
+ )
+ (QUOTE (LAMBDA (A)
+   (COND
+     (A (CONS (leakyReLUvec (CAR A)) (leakyReLUvec (CDR A))))
+     ((QUOTE T) NIL))))
  )
