@@ -1,7 +1,7 @@
 ((LAMBDA (u0 umax fracbitsize 1 digitlist
           _ addhalf _ addfull _ uaddnofc _ uaddnof _ umultnof
-          _ take _ drop _ ufixmult _ negate _ + _ - _ * _ isnegative _ < _ > _ <<
-          _ vdot _ vecmatmulVAT _ matmulABT _ ReLUscal _ ReLUvec
+          _ take _ drop _ ufixmult _ negate _ + _ - _ * _ isnegative _ < _ >
+          _ << _ vdot _ vecmatmulVAT _ matmulABT _ ReLUscal _ ReLUvec
           _ vecadd _ vecargmax _ nth _ nn _ PRINT
           _ img2vec _ A_1_T _ B_1 _ A_2_T _ B_2 _ printimg _ input)
    ((LAMBDA (_ _ _ _ _ _) (nn input))
