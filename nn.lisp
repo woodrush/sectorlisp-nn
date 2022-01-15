@@ -15,8 +15,6 @@
  (QUOTE (0 1 2 3 4 5 6 7 8 9))
  (QUOTE
    ;; addhalf : Half adder
-   ;;           Output binary is in reverse order (the msb is at the end)
-   ;;           The same applies to the entire system
  )
  (QUOTE (LAMBDA (X Y)
    (COND
@@ -40,6 +38,8 @@
     (addhalf X Y))))
  (QUOTE
    ;; uaddnofc : Unsigned N-bit add with carry
+   ;;            The output binary is in reverse order (the msb is at the end)
+   ;;            The same applies to the entire system
  )
  (QUOTE (LAMBDA (X Y C)
    (COND
