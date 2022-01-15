@@ -21,8 +21,6 @@ if __name__ == "__main__":
     
     model.load_weights("./params.h5")
 
-    model.evaluate(data_x_test, data_y_category_test, verbose=2)
-
     predlist = []
     for x, y in zip(data_x_test, data_y_labelname_test):
         print(y)
@@ -33,7 +31,7 @@ if __name__ == "__main__":
     print(data_y_labelname_test)
     print(predlist)
     cmat = confusion_matrix(data_y_labelname_test, predlist)
-    plt.figure(figsize=(10,8))
+    plt.figure(figsize=(7.5,6))
     sns.heatmap(cmat, annot=True)
     plt.xlabel("Prediction")
     plt.ylabel("Ground Truth")
@@ -41,3 +39,5 @@ if __name__ == "__main__":
     plt.savefig("confusion_matrix.png")
     # plt.show()
     plt.close()
+
+    model.evaluate(data_x_test, data_y_category_test, verbose=2)
