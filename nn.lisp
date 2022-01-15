@@ -2,7 +2,7 @@
           _ addhalf _ addfull _ uaddnofc _ uaddnof _ umultnof
           _ take _ drop _ ufixmult _ negate _ + _ - _ * _ 0>fix _ < _ > _ <<
           _ vdot _ vecmatmulVAT _ matmulABT _ ReLUscal _ ReLUvec _ ReLUmat
-          _ vecadd)
+          _ vecadd _ vecargmax _ nth)
    ((LAMBDA () ())
     (QUOTE
       (PRINT (* 1 1))(PRINT)
@@ -51,6 +51,11 @@
     (PRINT)
     (PRINT (vecadd (CONS 1 (CONS 2 (CONS 3 NIL)))
                    (CONS 3 (CONS 1 (CONS 2 NIL)))))(PRINT)
+    (PRINT)
+    (PRINT (vecargmax (CONS 1 (CONS 2 (CONS 3 (CONS u0 (CONS umax NIL)))))))(PRINT)
+    (PRINT (nth
+             (vecargmax (CONS 1 (CONS 2 (CONS 3 (CONS u0 (CONS umax NIL))))))
+             (CONS 1 (CONS 2 (CONS 3 (CONS u0 (CONS umax NIL)))))))(PRINT)
     ))
  (QUOTE (0 0 0 0  0 0 0 0    0 0 0 0))
  (QUOTE (1 1 1 1  1 1 1 1    1 1 1 1))
@@ -239,4 +244,31 @@
    (COND
      (X (CONS (+ (CAR X) (CAR Y)) (vecadd (CDR X) (CDR Y))))
      ((QUOTE T) NIL))))
+ (QUOTE
+   ;; vecargmax
+ )
+ (QUOTE (LAMBDA (X)
+   ((LAMBDA (vecargmaxhelper)
+     (vecargmaxhelper (CDR X) (CAR X) () (QUOTE (*))))
+    (QUOTE (LAMBDA (X curmax maxind curind)
+      (COND
+        (X (COND
+             ((< curmax (CAR X)) (vecargmaxhelper
+                                   (CDR X)
+                                   (CAR X)
+                                   curind
+                                   (CONS (QUOTE *) curind)))
+             ((QUOTE T) (vecargmaxhelper
+                                   (CDR X)
+                                   curmax
+                                   maxind
+                                   (CONS (QUOTE *) curind)))))
+        ((QUOTE T) maxind)))))))
+ (QUOTE
+   ;; nth
+ )
+ (QUOTE (LAMBDA (N L)
+   (COND
+     (N (nth (CDR N) (CDR L)))
+     ((QUOTE T) (CAR L)))))
  )
