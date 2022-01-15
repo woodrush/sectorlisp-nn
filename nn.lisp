@@ -1,7 +1,8 @@
 ((LAMBDA (u0 umax fracbitsize 1 2 3 -1
           _ addhalf _ addfull _ uaddnofc _ uaddnof _ umultnof
           _ take _ drop _ ufixmult _ negate _ + _ - _ * _ 0>fix _ < _ > _ <<
-          _ vdot _ vecmatmulVAT _ matmulABT _ leakyReLUscal _ leakyReLUvec _ leakyReLUmat)
+          _ vdot _ vecmatmulVAT _ matmulABT _ ReLUscal _ ReLUvec _ ReLUmat
+          _ vecadd)
    ((LAMBDA () ())
     (QUOTE
       (PRINT (* 1 1))(PRINT)
@@ -40,21 +41,24 @@
       ))(PRINT)
     )
     (PRINT (negate -1))(PRINT)
-    (PRINT (leakyReLUscal -1))(PRINT)
-    (PRINT (leakyReLUmat
+    (PRINT (ReLUscal -1))(PRINT)
+    (PRINT (ReLUmat
       (CONS (CONS 3    (CONS 1 (CONS 3    NIL)))
       (CONS (CONS -1   (CONS 2 (CONS 3    NIL)))
       (CONS (CONS 1    (CONS 2 (CONS -1   NIL)))
             NIL)))
+    ))(PRINT)
+    (PRINT)
+    (PRINT (vecadd (CONS 1 (CONS 2 (CONS 3 NIL)))
+                   (CONS 3 (CONS 1 (CONS 2 NIL)))))(PRINT)
     ))
-    ))
- (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    0 0 0 0  0 0 0 0))
- (QUOTE (1 1 1 1  1 1 1 1  1 1 1 1    1 1 1 1  1 1 1 1))
- (QUOTE (1 1 1 1  1 1 1 1  1 1 1 1))
- (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    1 0 0 0  0 0 0 0))
- (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    0 1 0 0  0 0 0 0))
- (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    1 1 0 0  0 0 0 0))
- (QUOTE (0 0 0 0  0 0 0 0  0 0 0 0    1 1 1 1  1 1 1 1))
+ (QUOTE (0 0 0 0  0 0 0 0    0 0 0 0))
+ (QUOTE (1 1 1 1  1 1 1 1    1 1 1 1))
+ (QUOTE (1 1 1 1  1 1 1 1))
+ (QUOTE (0 0 0 0  0 0 0 0    1 0 0 0))
+ (QUOTE (0 0 0 0  0 0 0 0    0 1 0 0))
+ (QUOTE (0 0 0 0  0 0 0 0    1 1 0 0))
+ (QUOTE (0 0 0 0  0 0 0 0    1 1 1 1))
  (QUOTE
    ;; addhalf : Half adder
    ;;           Output binary is in reverse order (the msb is at the end)
@@ -208,24 +212,31 @@
         (A (CONS (vecmatmulVAT (CAR A) BT) (matmulABThelper (CDR A))))
         ((QUOTE T) NIL)))))))
  (QUOTE
-   ;; leakyReLUscal
+   ;; ReLUscal
  )
  (QUOTE (LAMBDA (X)
    (COND
-     ((0>fix X) (negate (<< (negate X) (QUOTE (* * * * * *)))))
+     ((0>fix X) u0)
      ((QUOTE T) X))))
  (QUOTE
-   ;; leakyReLUvec
+   ;; ReLUvec
  )
  (QUOTE (LAMBDA (V)
    (COND
-     (V (CONS (leakyReLUscal (CAR V)) (leakyReLUvec (CDR V))))
+     (V (CONS (ReLUscal (CAR V)) (ReLUvec (CDR V))))
      ((QUOTE T) NIL))))
  (QUOTE
-   ;; leakyReLUmat
+   ;; ReLUmat
  )
  (QUOTE (LAMBDA (A)
    (COND
-     (A (CONS (leakyReLUvec (CAR A)) (leakyReLUvec (CDR A))))
+     (A (CONS (ReLUvec (CAR A)) (ReLUmat (CDR A))))
+     ((QUOTE T) NIL))))
+ (QUOTE
+   ;; vecadd
+ )
+ (QUOTE (LAMBDA (X Y)
+   (COND
+     (X (CONS (+ (CAR X) (CAR Y)) (vecadd (CDR X) (CDR Y))))
      ((QUOTE T) NIL))))
  )
