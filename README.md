@@ -52,7 +52,7 @@ Here are the results for the following input image:
 
 ![An example result of the neural network predicting a digit from an input image.](./res/ss-nn.png)
 
-The network is also capable of predicting images that are not in the [training dataset](./train/dataset.ipynb).
+The network is also capable of predicting images that are not in the training dataset.
 Here are the results for the following image:
 
 ```lisp
@@ -174,8 +174,9 @@ and are as follows:
 
 The input images used for this network are 3x5 binary monochrome images,
 all included as lists in [./train/dataset.py](./train/dataset.py).
-The entire training and testing dataset can be viewed in a Jupyter Notebook
+The entire training and testing dataset can be visualized in a Jupyter Notebook
 included in [./train/dataset.ipynb](./train/dataset.ipynb).
+All of the images contained in the dataset is available in my [blog post](https://woodrush.github.io/blog/posts/2022-01-16-neural-networks-in-pure-lisp.html#the-dataset) for this project.
 
 As mentioned before, the dataset, as well as the fully connected neural network model, were inspired by
 a [blog post](https://aidiary.hatenablog.com/entry/20050505/1274165051) (in Japanese)
