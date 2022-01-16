@@ -222,17 +222,17 @@
  (QUOTE
    ;; nn
  )
- (QUOTE (LAMBDA ()
-   (nth
-     (vecargmax
-       (vecadd
-         B_2
-         (vecmatmulVAT (ReLUvec (vecadd B_1
-                                        (vecmatmulVAT (img2vec input)
-                                                      A_1_T)))
-                       A_2_T)))
-     digitlist)
- ))
+ (QUOTE (LAMBDA (input)
+    ((LAMBDA (F1 F2 F3 F4 F5 F6 F7 F8)
+       (F8 (F7 (F6 (F5 (F4 (F3 (F2 (F1 input)))))))))
+     (QUOTE (LAMBDA (X) (img2vec X)))
+     (QUOTE (LAMBDA (X) (vecmatmulVAT X A_1_T)))
+     (QUOTE (LAMBDA (X) (vecadd X B_1)))
+     (QUOTE (LAMBDA (X) (ReLUvec X)))
+     (QUOTE (LAMBDA (X) (vecmatmulVAT X A_2_T)))
+     (QUOTE (LAMBDA (X) (vecadd X B_2)))
+     (QUOTE (LAMBDA (X) (vecargmax X)))
+     (QUOTE (LAMBDA (X) (nth X digitlist))))))
  (QUOTE
    ;; PRINT - Backwards compatibility
  )
