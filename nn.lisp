@@ -62,9 +62,9 @@
      ((EQ NIL Y) u0)
      ((QUOTE T)
       (uaddnof (COND
-               ((EQ (QUOTE 0) (CAR Y)) u0)
-               ((QUOTE T) X))
-             (umultnof (CONS (QUOTE 0) X) (CDR Y)))))))
+                 ((EQ (QUOTE 0) (CAR Y)) u0)
+                 ((QUOTE T) X))
+               (umultnof (CONS (QUOTE 0) X) (CDR Y)))))))
  (QUOTE
    ;; take : Take a list of (len L) atoms from X
  )
@@ -149,7 +149,8 @@
  )
  (QUOTE (LAMBDA (X Y)
    (COND
-     (X (+ (* (CAR X) (CAR Y)) (vdot (CDR X) (CDR Y))))
+     (X (+ (* (CAR X) (CAR Y))
+           (vdot (CDR X) (CDR Y))))
      ((QUOTE T) u0))))
  (QUOTE
    ;; vecmatmulVAT : vec, mat -> vec : Vector V times transposed matrix A
