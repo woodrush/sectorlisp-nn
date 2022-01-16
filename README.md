@@ -6,7 +6,7 @@ This project makes that a reality once again by implementing a neural network fo
 written in pure lisp without built-in integers or floating-point numbers, that runs on the IBM PC model 5150.
 
 Please see my blog post for a detailed description for training the network and implementing it in Lisp,
-[Building Neural Networks without Built-in Numbers in Pure Lisp using only Atoms and Lists](https://woodrush.github.io/blog/posts/2022-01-16-neural-networks-in-pure-lisp.html).
+[Building a Neural Network in Pure Lisp without Built-in Numbers using only Atoms and Lists](https://woodrush.github.io/blog/posts/2022-01-16-neural-networks-in-pure-lisp.html).
 
 
 ## Building Neural Networks only using Symbolic Manipulation
@@ -230,4 +230,4 @@ when being transferred to [nn.lisp](nn.lisp) to change the format from matrices 
 ## Impementation Details
 The implementation details such as training the neural network
 and implementing it in SectorLISP are available at my blog post,
-[Building Neural Networks without Built-in Numbers in Pure Lisp using only Atoms and Lists](https://woodrush.github.io/blog/posts/2022-01-16-neural-networks-in-pure-lisp.html).
+[Building a Neural Network in Pure Lisp without Built-in Numbers using only Atoms and Lists](https://woodrush.github.io/blog/posts/2022-01-16-neural-networks-in-pure-lisp.html).
