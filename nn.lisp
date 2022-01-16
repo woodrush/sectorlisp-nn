@@ -28,13 +28,13 @@
    ;; addfull : Full adder
  )
  (QUOTE (LAMBDA (X Y C)
-   ((LAMBDA (XY)
-    (COND
-      ((EQ (QUOTE 1) (CAR XY))
-       (COND
-         ((EQ (QUOTE 1) C) (CONS (QUOTE 0) (QUOTE 1)))
-         ((QUOTE T) (CONS (QUOTE 1) (QUOTE 0)))))
-      ((QUOTE T) (CONS C (CDR XY)))))
+   ((LAMBDA (HA1)
+      ((LAMBDA (HA2)
+         (CONS (CAR HA2)
+               (COND
+                 ((EQ (QUOTE 1) (CDR HA1)) (QUOTE 1))
+                 ((QUOTE T) (CDR HA2)))))
+       (addhalf C (CAR HA1))))
     (addhalf X Y))))
  (QUOTE
    ;; uaddnofc : Unsigned N-bit add with carry
