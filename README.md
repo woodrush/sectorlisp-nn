@@ -88,8 +88,6 @@ of SectorLISP that supports I/O, an additional output with some messages indicat
 Since the source code for this project is backwards comptible with the main SectorLISP branch,
 the same code can be run on both versions.
 
-The source code for this project is available at []().
-
 To run SectorLISP on the i8086 emulator [Blinkenlights](https://justine.lol/blinkenlights/),
 first follow the instructions on its [download page](https://justine.lol/blinkenlights/download.html)
 and get the latest version:
