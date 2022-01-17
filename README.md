@@ -1,4 +1,4 @@
-# A Neural Network built in Pure Lisp using only Atoms and Lists
+# A Neural Network Built in Pure Lisp Using Only Atoms and Lists
 ![The diagram of the neural network.](./res/nn-diagram.svg)
 
 At the dawn of Lisp after its birth in 1958, Lisp was used as a language for creating advanced artificial intelligence.
@@ -6,17 +6,17 @@ This project makes that a reality once again by implementing a neural network fo
 written in pure lisp without built-in integers or floating-point numbers, that runs on the IBM PC model 5150.
 
 Please see my blog post for a detailed description for training the network and implementing it in Lisp,
-[Building a Neural Network in Pure Lisp without Built-in Numbers using only Atoms and Lists](https://woodrush.github.io/blog/posts/2022-01-16-neural-networks-in-pure-lisp.html).
+[Building a Neural Network in Pure Lisp Without Built-In Numbers Using Only Atoms and Lists](https://woodrush.github.io/blog/posts/2022-01-16-neural-networks-in-pure-lisp.html).
 
 
-## Building Neural Networks only using Symbolic Manipulation
+## Building Neural Networks Only Using Symbolic Manipulation
 [SectorLISP](https://justine.lol/sectorlisp2/) is an amazing project
 where a fully functional Lisp interpreter is fit into the 512 bytes of the boot sector of a floppy disk.
 Since it works as a boot sector program, the binary can be written to a disk to be used as a boot drive,
 where the computer presents an interface for writing and evaluating Lisp programs,
 all running in the booting phase of bare metal on the 436-byte program.
 I have written another blog post on SectorLISP about
-[extending SectorLISP to implement BASIC REPLs and games]({% post_url 2022-01-12-sectorlisp-io %}).
+[extending SectorLISP to implement BASIC REPLs and games](https://woodrush.github.io/blog/posts/2022-01-12-sectorlisp-io.html).
 
 SectorLISP is implemented as a pure Lisp. In pure Lisp, there is _no_ built-in notion of integers or floating-point numbers,
 and only supports atoms and lists as available data structures.
