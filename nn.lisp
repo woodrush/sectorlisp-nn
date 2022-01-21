@@ -1,18 +1,41 @@
-((LAMBDA (u0 umax fracbitsize 1 digitlist
+((LAMBDA (_ nn _ digitlist _ u0 umax fracbitsize 1
           _ addhalf _ addfull _ uaddnofc _ uaddnof _ umultnof
           _ take _ drop _ ufixmult _ negate _ + _ - _ * _ isnegative _ < _ >
           _ << _ vdot _ vecmatmulVAT _ matmulABT _ ReLUscal _ ReLUvec
-          _ vecadd _ vecargmax _ nth _ nn _ PRINT
+          _ vecadd _ vecargmax _ nth _ PRINT
           _ img2vec _ A_1_T _ B_1 _ A_2_T _ B_2 _ printimg _ input)
    ((LAMBDA (_ _ _ _ _ _) (nn input))
-      (PRINT (QUOTE (Input:)))(PRINT)
-      (printimg input)(PRINT)
-      (PRINT (QUOTE (Your digit is:)))(PRINT)))
+      (PRINT (QUOTE (Input:)))
+      (PRINT)
+      (printimg input)
+      (PRINT)
+      (PRINT (QUOTE (Your digit is:)))
+      (PRINT)))
+ (QUOTE
+   ;; nn
+ )
+ (QUOTE (LAMBDA (input)
+    ((LAMBDA (F1 F2 F3 F4 F5 F6 F7 F8)
+       (F8 (F7 (F6 (F5 (F4 (F3 (F2 (F1 input)))))))))
+     (QUOTE (LAMBDA (X) (img2vec X)))
+     (QUOTE (LAMBDA (X) (vecmatmulVAT X A_1_T)))
+     (QUOTE (LAMBDA (X) (vecadd X B_1)))
+     (QUOTE (LAMBDA (X) (ReLUvec X)))
+     (QUOTE (LAMBDA (X) (vecmatmulVAT X A_2_T)))
+     (QUOTE (LAMBDA (X) (vecadd X B_2)))
+     (QUOTE (LAMBDA (X) (vecargmax X)))
+     (QUOTE (LAMBDA (X) (nth X digitlist))))))
+ (QUOTE
+   ;; digitlist
+ )
+ (QUOTE (0 1 2 3 4 5 6 7 8 9))
+ (QUOTE
+   ;; fixed-point number system
+ )
  (QUOTE (0  0 0 0 0  0 0 0 0  0 0 0 0    0 0 0 0 0))
  (QUOTE (1  1 1 1 1  1 1 1 1  1 1 1 1    1 1 1 1 1))
  (QUOTE (1  1 1 1 1  1 1 1 1  1 1 1 1))
  (QUOTE (0  0 0 0 0  0 0 0 0  0 0 0 0    1 0 0 0 0))
- (QUOTE (0 1 2 3 4 5 6 7 8 9))
  (QUOTE
    ;; addhalf : Half adder
  )
@@ -220,20 +243,6 @@
    (COND
      (N (nth (CDR N) (CDR L)))
      ((QUOTE T) (CAR L)))))
- (QUOTE
-   ;; nn
- )
- (QUOTE (LAMBDA (input)
-    ((LAMBDA (F1 F2 F3 F4 F5 F6 F7 F8)
-       (F8 (F7 (F6 (F5 (F4 (F3 (F2 (F1 input)))))))))
-     (QUOTE (LAMBDA (X) (img2vec X)))
-     (QUOTE (LAMBDA (X) (vecmatmulVAT X A_1_T)))
-     (QUOTE (LAMBDA (X) (vecadd X B_1)))
-     (QUOTE (LAMBDA (X) (ReLUvec X)))
-     (QUOTE (LAMBDA (X) (vecmatmulVAT X A_2_T)))
-     (QUOTE (LAMBDA (X) (vecadd X B_2)))
-     (QUOTE (LAMBDA (X) (vecargmax X)))
-     (QUOTE (LAMBDA (X) (nth X digitlist))))))
  (QUOTE
    ;; PRINT - Backwards compatibility
  )
